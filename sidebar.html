@@ -28,14 +28,18 @@
   <body>
     <h3>Enter Tracking Numbers</h3>
     <p>Paste the tracking numbers (separated by comma or new line) from the email below:</p>
-    <textarea id="tnInput"></textarea>
+    <textarea id="tnInput" placeholder="Paste tracking numbers here"></textarea>
     <button onclick="processTNs()">Process Tracking Numbers</button>
 
     <script>
       function processTNs() {
         const tnInput = document.getElementById("tnInput").value;
-        google.script.run.processTrackingNumbers(tnInput);
-        google.script.host.close();
+        google.script.run
+          .withSuccessHandler(function(message) {
+            alert(message);
+            google.script.host.close();
+          })
+          .processTrackingNumbers(tnInput);
       }
     </script>
   </body>
